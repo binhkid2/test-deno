@@ -1,22 +1,24 @@
-name: Deploy
+name: test
 
-on: push
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
-  deploy:
+  test:
+    name: test-action
     runs-on: ubuntu-latest
-
     permissions:
-      id-token: write # This is required to allow the GitHub Action to authenticate with Deno Deploy.
+      id-token: write
       contents: read
-
     steps:
-      - name: Clone repository
+      - name: Checkout repository
         uses: actions/checkout@v3
-
       - name: Deploy to Deno Deploy
-        uses: denoland/deployctl@v1
+        uses: ./
         with:
-          project: my-proasject # the name of the project on Deno Deploy
-          entrypoint: main.ts # the entrypoint to deploy
-          import-map: import_map.json
+          project: hdasdas
+          entrypoint: main.ts
+          import-map: ./import_map.json
